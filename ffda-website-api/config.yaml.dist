@@ -1,0 +1,6 @@
+alfred: True # Activate this only on the alfred master
+vnstat: True
+collect:
+  - http://gw03.ffda/webstats.json
+target: /srv/www/default/webstats.json
+

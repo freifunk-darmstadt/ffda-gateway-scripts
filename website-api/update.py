@@ -13,8 +13,8 @@ import time
 with open("config.yaml", "r") as file_handle:
         config = yaml.load(file_handle)
 
-alfred_call = "alfred-json -r 159 -z -f json"
-vnstat_call = "vnstat -d -i eth0"
+alfred_call = "/usr/bin/alfred-json -r 159 -z -f json"
+vnstat_call = "/usr/bin/vnstat -d -i eth0"
 
 document = {}
 

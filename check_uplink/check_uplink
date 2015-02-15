@@ -1,0 +1,42 @@
+#!/bin/bash
+
+BATMAN_IF=bat0
+UPLINK_IF=tun0
+
+CONTROL_TARGET_IP4=8.8.4.4
+
+if [ -f /run/maintenance ]; then
+	logger -s "check_uplink: maintenance mode, doing nothing."
+	exit 0
+fi
+
+if [ ! -e /sys/class/net/$BATMAN_IF/mesh/gw_mode ]; then
+	logger -s "check_uplink: batman-adv interface missing"
+	exit 1
+fi
+
+# Check: ICMP v4 to $CONTROL_TARGET_IP4 on the $UPLINK_IF
+ping -I $UPLINK_IF $CONTROL_TARGET_IP4 -c 4 -i 3 -W 3 &>/dev/null
+if [ $? -eq 0 ]; then
+	TARGET_STATE=server
+else
+	TARGET_STATE=off
+fi
+
+# Process new state
+OLD_STATE="$(cat /sys/class/net/$BATMAN_IF/mesh/gw_mode)"
+if [ $TARGET_STATE != $OLD_STATE ]; then
+	logger -s "check_uplink: changing $BATMAN_IF/gw_mode to $TARGET_STATE"
+	echo $TARGET_STATE > /sys/class/net/$BATMAN_IF/mesh/gw_mode
+
+	/usr/sbin/service isc-dhcp-server status
+	DHCPD_STATE=$?
+	if [ $TARGET_STATE == "server" ] && [ $DHCPD_STATE -ne 0 ]; then
+		logger -s "check_uplink: starting dhcpd"
+		/usr/sbin/service isc-dhcp-server start
+	else
+		logger -s "check_uplink: stopping dhcpd"
+		/usr/sbin/service isc-dhcp-server stop
+	fi
+fi
+

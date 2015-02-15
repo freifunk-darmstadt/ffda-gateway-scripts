@@ -7,6 +7,7 @@ import re
 import requests
 from collections import Counter
 import sys
+import time
 
 
 with open("config.yaml", "r") as file_handle:
@@ -97,6 +98,9 @@ if config['collect']:
                 document['traffic'] = exernal_traffic
 
         print("total traffic is {}".format(dict(document['traffic'])))
+
+
+document['changed'] = int(time.time())
 
 if config['target']:
         with open(config['target'], "w") as handle:

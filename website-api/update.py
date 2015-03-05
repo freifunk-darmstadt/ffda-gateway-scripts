@@ -30,7 +30,7 @@ if config['alfred']:
                 if 'clients' not in router:
                         continue
                 nodes += 1
-                clients += int(router['clients']['wifi'])
+                clients += int(router['clients']['total'])
 
         document['nodes'] = nodes
         document['clients'] = clients

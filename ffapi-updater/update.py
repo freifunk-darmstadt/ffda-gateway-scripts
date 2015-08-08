@@ -9,7 +9,7 @@ from datetime import datetime
 with open('config.yml', 'r') as config_file:
     config = yaml.load(config_file)
 
-with open(config['template'], 'r') as base_file:
+with open(config['template'], 'r', encoding='utf-8') as base_file:
     base = json.load(base_file)
 
 # update timestamp

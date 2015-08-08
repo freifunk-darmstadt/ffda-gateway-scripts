@@ -1,0 +1,151 @@
+{
+  "name": "Freifunk Darmstadt",
+  "url": "http://darmstadt.freifunk.net",
+  "location": {
+    "city": "Darmstadt",
+    "country": "DE",
+    "lat": 49.87299,
+    "lon": 8.650015,
+    "address": {
+      "Name": "Hackerspace \"Trollhöhle\"",
+      "Street": "Wilhelm-Leuschner-Straße 36",
+      "Zipcode": "64293"
+    }
+  },
+  "contact": {
+    "email": "info@darmstadt.freifunk.net",
+    "phone": "+49 40 401801 9601",
+    "irc": "irc://irc.hackint.org/ffda",
+    "ml": "http://lists.freifunk.net/mailman/listinfo/darmstadt-freifunk.net",
+    "facebook": "https://www.facebook.com/freifunkDA",
+    "twitter": "@freifunkda",
+    "googleplus": "https://plus.google.com/u/0/b/113942916935529162777/113942916935529162777/posts"
+  },
+  "state": {
+    "focus": [
+      "infrastructure/backbone",
+      "Public Free Wifi",
+      "Social Community Building",
+      "Local services and content",
+      "Free internet access"
+    ]
+  },
+  "timeline": [
+    {
+      "description": "Erstes Treffen",
+      "timestamp": "2014-02-13",
+      "url": "https://darmstadt.freifunk.net/news/2014/02/17/erstes-ffda-treffen"
+    },
+    {
+      "description": "Erster Knoten",
+      "timestamp": "2014-06-26",
+      "url": "https://darmstadt.freifunk.net/news/2014/07/09/erste-mesh-knoten"
+    },
+    {
+      "description": "Präsentation bei städtischer IT-Abteilung",
+      "timestamp": "2015-01-29",
+      "url": "https://darmstadt.freifunk.net/news/2015/01/31/informationsveranstaltung-bei-der-stadt-darmstadt"
+    },
+    {
+      "description": "100 Knoten",
+      "timestamp": "2015-03-01",
+      "url": "https://darmstadt.freifunk.net/news/2015/03/02/ein-jahr-freifunk-darmstadt"
+    },
+    {
+      "description": "IPv6 Internetanbindung",
+      "timestamp": "2015-04-06",
+      "url": "https://darmstadt.freifunk.net/news/2015/04/23/ipv6-anbindung"
+    },
+    {
+      "description": "IPv4 Internetanbindung nun über eigene IP-Adressen",
+      "timestamp": "2015-06-16",
+      "url": "https://darmstadt.freifunk.net/news/2015/06/17/uplink-via-freifunk-rheinland"
+    }
+  ],
+  "feeds": [
+    {
+      "name": "News",
+      "category": "blog",
+      "type": "rss",
+      "url": "https://darmstadt.freifunk.net/feed.xml"
+    }
+  ],
+  "nodeMaps": [
+    {
+      "url": "https://map.darmstadt.freifunk.net",
+      "interval": "60",
+      "technicalType": "meshviewer",
+      "mapType": "geographical"
+    }
+  ],
+  "support": {
+    "club": {
+      "name": "Chaos-Darmstadt e.V.",
+      "street": "Wilhelm-Leuschner-Straße 36",
+      "zip": "64293",
+      "city": "Darmstadt",
+      "url": "http://www.chaos-darmstadt.de",
+      "email": "info@chaos-darmstadt.de"
+    },
+    "donations": {
+      "bankaccount": {
+        "IBAN": "DE96508501500000711853",
+        "BIC": "HELADEF1DAS"
+      },
+      "campaigns": [
+        {
+          "provider": "betterplace",
+          "projectid": "27613"
+        },
+        {
+          "provider": "boost",
+          "projectid": "3433"
+        }
+      ]
+    }
+  },
+  "techDetails": {
+    "firmware": {
+      "name": "gluon-ffda",
+      "url": "http://firmware.darmstadt.freifunk.net",
+      "docs": "http://wiki.darmstadt.freifunk.net/firmware-versionen"
+    },
+    "dns": [
+      {
+        "domainname": "ffda",
+        "nameserver": [
+          "10.223.0.3",
+          "10.223.0.4",
+          "fdca:ffee:ffda::3",
+          "fdca:ffee:ffda::4"
+        ]
+      }
+    ],
+    "networks": {
+      "ipv6": [
+        {
+          "network": "fdca:ffee:ffda::/48"
+        },
+        {
+          "network": "2a03:2260:118::/48"
+        }
+      ],
+      "ipv4": [
+        {
+          "network": "10.223.0.0/16"
+        }
+      ]
+    },
+    "routing": [
+      "batman-adv"
+    ],
+    "updatemode": [
+      "manual",
+      "autoupdate"
+    ],
+    "legals": [
+      "vpnnational"
+    ]
+  },
+  "api": "0.4.8"
+}

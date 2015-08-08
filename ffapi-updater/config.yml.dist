@@ -1,0 +1,3 @@
+template: base.json
+nodelist: https://map.darmstadt.freifunk.net/data/nodelist.json
+target: /srv/www/api/ffapi.json

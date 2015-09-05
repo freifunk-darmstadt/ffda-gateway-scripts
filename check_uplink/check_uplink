@@ -1,9 +1,10 @@
 #!/bin/bash
 
 BATMAN_IF=bat0
-UPLINK_IF=tun0
+BRIDGE_IF=freifunk
 
 CONTROL_TARGET_IP4=8.8.4.4
+SOURCE_IP4=$(ip -4 addr show dev $BRIDGE_IF | grep "inet" | awk '{print $2}' | cut -d'/' -f1)
 
 if [ -f /run/maintenance ]; then
 	logger -s "check_uplink: maintenance mode, doing nothing."
@@ -15,8 +16,8 @@ if [ ! -e /sys/class/net/$BATMAN_IF/mesh/gw_mode ]; then
 	exit 1
 fi
 
-# Check: ICMP v4 to $CONTROL_TARGET_IP4 on the $UPLINK_IF
-ping -I $UPLINK_IF $CONTROL_TARGET_IP4 -c 4 -i 3 -W 3 &>/dev/null
+# Check: ICMP v4 to $CONTROL_TARGET_IP4, using the IPv4 address on $BRIDGE_IF as the SRCIP
+ping -I $SOURCE_IP4 $CONTROL_TARGET_IP4 -c 4 -i 3 -W 3 &>/dev/null
 if [ $? -eq 0 ]; then
 	TARGET_STATE=server
 else

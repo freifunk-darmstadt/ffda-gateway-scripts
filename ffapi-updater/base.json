@@ -76,6 +76,12 @@
       "interval": "60",
       "technicalType": "meshviewer",
       "mapType": "geographical"
+    },
+    {
+      "url": "https://map.darmstadt.freifunk.net/data/nodelist.json",
+      "interval": "60",
+      "technicalType": "nodelist",
+      "mapType": "list/status"
     }
   ],
   "support": {

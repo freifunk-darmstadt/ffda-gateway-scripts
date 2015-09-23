@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+
+import os
+import re
+import sys
+from collections import namedtuple
+from ipaddress import IPv6Address, IPv6Network
+from subprocess import call
+from time import time
+
+import requests
+from dns.rdtypes.ANY.LOC import LOC
+from jinja2 import Environment, FileSystemLoader
+
+
+# configuration
+nodeinfo_url = 'https://api.darmstadt.freifunk.net/alfred/nodeinfo.json'
+
+internal_prefix = IPv6Network('fdca:ffee:ffda::/64')
+external_prefix = IPv6Network('2a03:2260:118::/48')
+
+basedir = '/tmp/etc/bind/node.ffda.io'
+internal_target = os.path.join(basedir, 'internal.zone')
+external_target = os.path.join(basedir, 'external.zone')
+
+Nameserver = namedtuple('Nameserver', ['hostname', 'ip4', 'ip6'])
+Node = namedtuple('Node', ['hostname', 'ip6', 'position'])
+
+internal_nameservers = [Nameserver('ns2', '10.223.0.2', 'fdca:ffee:ffda::2'),
+                        Nameserver('ns3', '10.223.0.3', 'fdca:ffee:ffda::3'),
+                        Nameserver('ns4', '10.223.0.4', 'fdca:ffee:ffda::4')]
+
+external_nameservers = [Nameserver('ns1', '78.47.64.91', '2a01:4f8:d16:1fc5::2'),
+                        Nameserver('ns2', '130.83.125.113', '2001:41b8:83f:2013:0:8253:7d71:0'),
+                        Nameserver('ns3', '46.252.25.132', '2a00:1158:3::fc'),
+                        Nameserver('ns4', '130.83.198.1', '2001:41b8:83f:4242::ffda')]
+
+template_name = 'node.ffda.io.zone.jinja2'
+
+# here be dragons
+valid_hostname_regex = r'^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$'
+valid_hostname = re.compile(valid_hostname_regex)
+
+serial = int(time())
+
+internal_nodes = []
+external_nodes = []
+
+data = requests.get(nodeinfo_url).json()
+
+for node in data.values():
+    hostname = node['hostname'].replace('_', '-')
+    if valid_hostname.match(hostname) is None:
+        continue
+
+    try:
+        lat = node['location']['latitude']
+        lng = node['location']['longitude']
+
+        try:
+            # altitude is optional
+            alt = node['location']['altitude'] * 100
+        except KeyError:
+            alt = 0
+
+        position = LOC(1, 29, lat, lng, alt)
+    except KeyError:
+        position = None
+
+    try:
+        for addr in node['network']['addresses']:
+            addr = IPv6Address(addr)
+            if addr in internal_prefix:
+                internal_nodes.append(Node(hostname, addr, position))
+            elif addr in external_prefix:
+                external_nodes.append(Node(hostname, addr, position))
+    except KeyError:
+        pass
+
+env = Environment(loader=FileSystemLoader('templates'))
+template = env.get_template(template_name)
+
+try:
+    os.makedirs(basedir)
+except IOError:
+    pass
+
+with open(internal_target, 'w+') as handle:
+    handle.write(template.render(serial=serial, nameservers=internal_nameservers, nodes=internal_nodes))
+
+with open(external_target, 'w+') as handle:
+    handle.write(template.render(serial=serial, nameservers=external_nameservers, nodes=external_nodes))
+
+sys.exit(call(['rndc', 'reload'], shell=True, stderr=sys.stderr))

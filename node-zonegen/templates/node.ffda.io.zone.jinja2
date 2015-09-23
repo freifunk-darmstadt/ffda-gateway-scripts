@@ -1,0 +1,23 @@
+$TTL 1h
+$ORIGIN node.ffda.io.
+@    IN    SOA    ns1.ffda.io. info.darmstadt.freifunk.net. (
+                {{ serial }} ; Serial - date by convention
+                1h         ; Refresh
+                3m         ; Retry
+                1w         ; Expire
+                1m         ; Negative cache TTL
+)
+
+; authoritative nameservers
+{% for ns in nameservers %}            NS    {{ ns.hostname }}
+{% endfor %}
+
+{% for ns in nameservers %}{{ ns.hostname }}    A    {{ ns.ip4 }}
+{{ ''.ljust(6) }} AAAA {{ ns.ip6 }}
+{% endfor %}
+
+; nodes
+{% for node in nodes %}{{ (node.hostname).ljust(32) }} AAAA {{ node.ip6 }}{% if node.position %}
+{{ ''.ljust(32) }} LOC  {{ node.position }}{% endif %}
+{% endfor %}
+

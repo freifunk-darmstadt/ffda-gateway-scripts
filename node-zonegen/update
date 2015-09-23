@@ -91,4 +91,4 @@ with open(internal_target, 'w+') as handle:
 with open(external_target, 'w+') as handle:
     handle.write(template.render(serial=serial, nameservers=external_nameservers, nodes=external_nodes))
 
-sys.exit(call(['rndc', 'reload'], shell=True, stderr=sys.stderr))
+sys.exit(call('rndc reload', shell=True, stderr=sys.stderr))

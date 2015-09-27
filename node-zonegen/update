@@ -19,9 +19,9 @@ nodeinfo_url = 'https://api.darmstadt.freifunk.net/alfred/nodeinfo.json'
 internal_prefix = IPv6Network('fdca:ffee:ffda::/64')
 external_prefix = IPv6Network('2a03:2260:118::/48')
 
-basedir = '/tmp/etc/bind/node.ffda.io'
-internal_target = os.path.join(basedir, 'internal.zone')
-external_target = os.path.join(basedir, 'external.zone')
+basedir = '/etc/bind/zones/zonefiles/'
+internal_target = os.path.join(basedir, 'node.ffda.io.zone-internal')
+external_target = os.path.join(basedir, 'node.ffda.io.zone-external')
 
 Nameserver = namedtuple('Nameserver', ['hostname', 'ip4', 'ip6'])
 Node = namedtuple('Node', ['hostname', 'ip6', 'position'])

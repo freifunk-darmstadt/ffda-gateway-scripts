@@ -57,6 +57,9 @@ for node in data.values():
         lat = node['location']['latitude']
         lng = node['location']['longitude']
 
+        assert -90 <= lat <= 90
+        assert -180 <= lng <= 180
+
         try:
             # altitude is optional
             alt = node['location']['altitude'] * 100
@@ -64,7 +67,7 @@ for node in data.values():
             alt = 0
 
         position = LOC(1, 29, lat, lng, alt)
-    except KeyError:
+    except (KeyError, AssertionError):
         position = None
 
     try:

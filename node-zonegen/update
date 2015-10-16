@@ -71,7 +71,7 @@ for node in data.values():
             alt = 0
 
         position = LOC(rdclass=1, rdtype=29, latitude=lat, longitude=lng, altitude=alt, size=20, hprec=10*100, vprec=15*100)
-    except (KeyError, AssertionError):
+    except (TypeError, KeyError, AssertionError):
         position = None
 
     try:

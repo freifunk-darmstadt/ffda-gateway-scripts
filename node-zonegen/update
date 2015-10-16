@@ -14,6 +14,10 @@ from jinja2 import Environment, FileSystemLoader
 
 
 # configuration
+zone = 'node.ffda.io.'
+view_internal = 'internal'
+view_external = 'any'
+
 nodeinfo_url = 'https://api.darmstadt.freifunk.net/alfred/nodeinfo.json'
 
 internal_prefix = IPv6Network('fdca:ffee:ffda::/64')
@@ -94,4 +98,8 @@ with open(internal_target, 'w+') as handle:
 with open(external_target, 'w+') as handle:
     handle.write(template.render(serial=serial, nameservers=external_nameservers, nodes=external_nodes))
 
-sys.exit(call('rndc reload', shell=True, stderr=sys.stderr))
+exit_code = 0
+exit_code += call("rndc reload {zone} IN {view}".format(zone=zone, view=view_internal), shell=True, stderr=sys.stderr)
+exit_code += call("rndc reload {zone} IN {view}".format(zone=zone, view=view_external), shell=True, stderr=sys.stderr)
+
+sys.exit(exit_code)

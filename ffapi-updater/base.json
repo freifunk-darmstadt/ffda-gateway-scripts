@@ -68,6 +68,12 @@
       "category": "blog",
       "type": "rss",
       "url": "https://darmstadt.freifunk.net/feed.xml"
+    },
+    {
+      "name": "Kalender",
+      "category": "ics",
+      "type": "ics",
+      "url": "https://api.darmstadt.freifunk.net/calendar/calendar.ics"
     }
   ],
   "nodeMaps": [

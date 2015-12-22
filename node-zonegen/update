@@ -35,7 +35,7 @@ internal_nameservers = [Nameserver('ns2', '10.223.0.2', 'fdca:ffee:ffda::2'),
                         Nameserver('ns4', '10.223.0.4', 'fdca:ffee:ffda::4')]
 
 external_nameservers = [Nameserver('ns1', '78.47.64.91', '2a01:4f8:d16:1fc5::2'),
-                        Nameserver('ns2', '130.83.125.113', '2001:41b8:83f:2013:0:8253:7d71:0'),
+                        Nameserver('ns2', '82.195.73.2', '2001:67c:2ed8::b439:47ff:fef3:3546'),
                         Nameserver('ns3', '46.252.25.132', '2a00:1158:3::fc'),
                         Nameserver('ns4', '130.83.198.1', '2001:41b8:83f:4242::ffda')]
 

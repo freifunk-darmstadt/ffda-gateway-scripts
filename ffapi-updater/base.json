@@ -120,14 +120,17 @@
     "firmware": {
       "name": "gluon-ffda",
       "url": "http://firmware.darmstadt.freifunk.net",
-      "docs": "http://wiki.darmstadt.freifunk.net/firmware-versionen"
+      "docs": "https://wiki.darmstadt.freifunk.net/Firmware",
+      "vpnaccess": "mail"
     },
     "dns": [
       {
-        "domainname": "ffda",
+        "domainname": "ffda.io",
         "nameserver": [
+          "10.223.0.1",
           "10.223.0.3",
           "10.223.0.4",
+          "fdca:ffee:ffda::1",
           "fdca:ffee:ffda::3",
           "fdca:ffee:ffda::4"
         ]
@@ -140,11 +143,17 @@
         },
         {
           "network": "2a03:2260:118::/48"
+        },
+        {
+          "network": "2001:67c:2ed8::/48"
         }
       ],
       "ipv4": [
         {
           "network": "10.223.0.0/16"
+        },
+        {
+          "network": "82.195.73.0/26"
         }
       ]
     },
@@ -156,8 +165,8 @@
       "autoupdate"
     ],
     "legals": [
-      "vpnnational"
+      "institutions"
     ]
   },
-  "api": "0.4.9"
+  "api": "0.4.11"
 }

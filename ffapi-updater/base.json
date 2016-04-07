@@ -102,7 +102,8 @@
     "donations": {
       "bankaccount": {
         "IBAN": "DE96508501500000711853",
-        "BIC": "HELADEF1DAS"
+        "BIC": "HELADEF1DAS",
+        "usage": "Freifunk"
       },
       "campaigns": [
         {
